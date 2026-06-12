@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="portfolio-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mazroof-Ul-Islam | Executive Portfolio</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-base: #030712;                 /* Cosmic Void Base */
+            --bg-card: rgba(10, 15, 30, 0.45);  /* Hyper-Translucent Cyber Glass */
+            --bg-sidebar: rgba(4, 8, 18, 0.85); /* Frost Slate Sidebar */
+            --accent-green: #059669;            /* Deep Emerald */
+            --accent-emerald: #10b981;          /* Vivid Mint Glow */
+            --accent-blue: #2563eb;             /* Sapphire Blue */
+            --accent-neon-blue: #3b82f6;        /* Electric Cyan Glow */
+            --text-white: #ffffff;
+            --text-silver: #cbd5e1;
+            --text-muted: #64748b;
+            --border-glass: rgba(255, 255, 255, 0.04);
+            --border-glow: rgba(16, 185, 129, 0.3);
+            
+            /* Typography Variables */
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Arabic Typography Engine Switch */
+        [dir="rtl"] {
+            --font-main: 'Cairo', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-main);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-white);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* DYNAMIC CHROMATIC AURORA BACKGROUND LAYER */
+        .aurora-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.12) 0px, transparent 50%),
+                        radial-gradient(at 100% 100%, rgba(37, 99, 219, 0.12) 0px, transparent 50%),
+                        radial-gradient(at 50% 50%, rgba(139, 92, 246, 0.08) 0px, transparent 60%);
+            filter: blur(80px);
+            opacity: 0.85;
+        }
+
+        .aurora-orb {
+            position: absolute;
+            border-radius: 50%;
+            mix-blend-mode: screen;
+            animation: moveOrb 25s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 80%);
+            top: -10%;
+            left: 20%;
+        }
+
+        .orb-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 80%);
+            bottom: -15%;
+            right: 10%;
+            animation-delay: -5s;
+            animation-duration: 35s;
+        }
+
+        @keyframes moveOrb {
+            0% { transform: translateY(0) scale(1) rotate(0deg); }
+            100% { transform: translateY(100px) scale(1.2) rotate(360deg); }
+        }
+
+        /* PREMIUM SLIDER SWITCH SELECTOR BAR */
+        .lang-control-panel {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-glass);
+            padding: 0.35rem;
+            border-radius: 100px;
+            display: flex;
+            position: relative;
+            margin-bottom: 2.5rem;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
+            flex-shrink: 0;
+        }
+
+        .lang-toggle-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.65rem 0;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 2;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* Slider Background Pill */
+        .slider-pill {
+            position: absolute;
+            top: 4px;
+            bottom: 4px;
+            width: calc(50% - 4px);
+            background: linear-gradient(135deg, var(--accent-emerald), var(--accent-neon-blue));
+            border-radius: 100px;
+            z-index: 1;
+            transition: transform 0.38s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transform: translateX(0);
+        }
+
+        /* EXECUTIVE SIDEBAR CONTAINER */
+        .sidebar {
+            width: 360px;
+            background-color: var(--bg-sidebar);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 3rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* Premium Custom Sidebar Scrollbar */
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        [dir="ltr"] .sidebar { left: 0; border-right: 1px solid var(--border-glass); }
+        [dir="rtl"] .sidebar { right: 0; border-left: 1px solid var(--border-glass); }
+
+        .profile-container {
+            margin-bottom: 1.75rem;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .profile-container::after {
+            content: '';
+            position: absolute;
+            top: -4px; left: -4px; right: -4px; bottom: -4px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-emerald), var(--accent-neon-blue));
+            z-index: -1;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top center;
+            border: 4px solid #060b13;
+        }
+
+        .name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 40%, var(--accent-emerald) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+            width: 100%;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .subtitle {
+            font-size: 0.88rem;
+            color: var(--accent-emerald);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            line-height: 1.5;
+            background: rgba(16, 185, 129, 0.08);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            width: 100%;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .nav-tabs {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            width: 100%;
+            background: transparent;
+            border: 1px solid transparent;
+            padding: 1.1rem 1.5rem;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-silver);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            transition: all 0.3s ease;
+        }
+
+        [dir="ltr"] .tab-btn { text-align: left; }
+        [dir="rtl"] .tab-btn { text-align: right; }
+
+        .tab-btn i {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-white);
+            border-color: var(--border-glass);
+        }
+
+        .tab-btn.active-tab {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(59, 130, 246, 0.04));
+            color: var(--accent-emerald);
+            border-color: rgba(16, 185, 129, 0.25);
+        }
+
+        .tab-btn.active-tab i {
+            color: var(--accent-emerald);
+        }
+
+        /* MAIN WORKSPACE VIEWPORT VIEW */
+        .main-viewport {
+            flex: 1;
+            padding: 5rem 5rem;
+            max-width: 1300px;
+            z-index: 10;
+        }
+
+        [dir="ltr"] .main-viewport { margin-left: 360px; margin-right: 0; }
+        [dir="rtl"] .main-viewport { margin-right: 360px; margin-left: 0; }
+
+        .tab-content {
+            display: none;
+            animation: contentMorph 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .tab-content.active-content {
+            display: block;
+        }
+
+        @keyframes contentMorph {
+            from { opacity: 0; transform: translateY(15px); filter: blur(4px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        h2 {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: var(--text-white);
+            margin-bottom: 2.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        h2 i {
+            color: var(--accent-emerald);
+            font-size: 1.5rem;
+        }
+
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 30px 60px -25px rgba(0, 0, 0, 0.6);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--border-glow);
+            box-shadow: 0 30px 60px -20px rgba(16, 185, 129, 0.04);
+        }
+
+        .summary-text {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #cbd5e1;
+            font-weight: 400;
+        }
+        [dir="rtl"] .summary-text { line-height: 2.1; font-size: 1.15rem; }
+
+        /* PRECISE ISOLATED MULTILINGUAL DISPLAY SYSTEM */
+        .lang-en-view, .lang-ar-view { display: none !important; }
+        
+        html[lang="en"] .lang-en-view { display: block !important; }
+        html[lang="en"] .lang-en-view-flex { display: flex !important; }
+        html[lang="en"] span.lang-en-view { display: inline !important; }
+        
+        html[lang="ar"] .lang-ar-view { display: block !important; }
+        html[lang="ar"] .lang-ar-view-flex { display: flex !important; }
+        html[lang="ar"] span.lang-ar-view { display: inline !important; }
+
+        /* STRUCTURAL CONTENT COMPONENT DESIGNS */
+        .skills-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .matrix-item {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 2.25rem;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .matrix-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .matrix-item h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-white);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .matrix-item h3 i { color: var(--accent-neon-blue); }
+
+        .interactive-list { list-style: none; }
+        .interactive-list li {
+            position: relative;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+            color: var(--text-silver);
+            font-size: 1rem;
+        }
+        [dir="rtl"] .interactive-list li { line-height: 1.9; }
+
+        [dir="ltr"] .interactive-list li { padding-left: 1.75rem; }
+        [dir="rtl"] .interactive-list li { padding-right: 1.75rem; }
+
+        .interactive-list li::before {
+            content: "✦";
+            position: absolute;
+            color: var(--accent-emerald);
+            font-weight: bold;
+        }
+        [dir="ltr"] .interactive-list li::before { left: 0; }
+        [dir="rtl"] .interactive-list li::before { right: 0; }
+
+        /* High-Definition Timeline */
+        .dynamic-timeline { position: relative; }
+        [dir="ltr"] .dynamic-timeline { padding-left: 3rem; }
+        [dir="rtl"] .dynamic-timeline { padding-right: 3rem; }
+
+        .dynamic-timeline::before {
+            content: ''; position: absolute; top: 10px; bottom: 10px; width: 2px;
+            background: linear-gradient(to bottom, var(--accent-emerald), var(--accent-neon-blue), transparent);
+        }
+        [dir="ltr"] .dynamic-timeline::before { left: 7px; }
+        [dir="rtl"] .dynamic-timeline::before { right: 7px; }
+
+        .timeline-node { position: relative; padding-bottom: 4rem; }
+        .timeline-node:last-child { padding-bottom: 0; }
+
+        .timeline-node::before {
+            content: ''; position: absolute; top: 8px; width: 14px; height: 14px; border-radius: 50%;
+            background: var(--bg-base); border: 3px solid var(--accent-emerald);
+            box-shadow: 0 0 15px var(--accent-emerald); z-index: 5;
+        }
+        [dir="ltr"] .timeline-node::before { left: calc(-3rem + 1px); }
+        [dir="rtl"] .timeline-node::before { right: calc(-3rem + 1px); }
+
+        .node-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; gap: 1.5rem; }
+        .node-title { font-size: 1.45rem; font-weight: 700; color: var(--text-white); }
+        .node-organization { font-size: 1.1rem; color: var(--accent-emerald); font-weight: 600; margin-top: 0.35rem; }
+        
+        .node-badge {
+            background: rgba(16, 185, 129, 0.06); color: var(--accent-emerald); padding: 0.5rem 1.25rem;
+            border-radius: 100px; font-size: 0.85rem; font-weight: 700; border: 1px solid rgba(16, 185, 129, 0.2); white-space: nowrap;
+        }
+
+        /* Accordion Structure */
+        .accordion-wrapper { display: flex; flex-direction: column; gap: 1rem; }
+        .accordion-item { border: 1px solid var(--border-glass); border-radius: 16px; background: rgba(255, 255, 255, 0.005); overflow: hidden; }
+        .accordion-trigger { padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .accordion-trigger h4 { font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 1rem; }
+        .accordion-trigger i.chevron { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); color: var(--text-muted); }
+        
+        .accordion-content { 
+            max-height: 0; 
+            overflow: hidden; 
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease; 
+            padding: 0 2rem; 
+            color: var(--text-silver); 
+            font-size: 1rem; 
+            line-height: 1.7; 
+        }
+        [dir="rtl"] .accordion-content { line-height: 1.9; }
+
+        .accordion-item.is-open { border-color: rgba(59, 130, 246, 0.25); background: rgba(59, 130, 246, 0.01); }
+        .accordion-item.is-open .accordion-trigger i.chevron { transform: rotate(180deg); color: var(--accent-neon-blue); }
+        .accordion-item.is-open .accordion-content { max-height: 1000px; padding-top: 0.5rem; padding-bottom: 2rem; }
+
+        /* Media Deck Pill Metrics */
+        .contact-deck { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .deck-pill { display: flex; align-items: center; gap: 1.25rem; padding: 1.25rem; background: rgba(255, 255, 255, 0.005); border: 1px solid var(--border-glass); border-radius: 16px; text-decoration: none; color: var(--text-white); transition: all 0.3s ease; }
+        .deck-pill:hover { background: rgba(16, 185, 129, 0.04); border-color: rgba(16, 185, 129, 0.2); transform: translateY(-2px); }
+        .deck-pill i { font-size: 1.25rem; color: var(--accent-emerald); background: rgba(16, 185, 129, 0.08); width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .deck-pill span { font-size: 0.95rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* Responsive Breakpoints Engine */
+        @media (max-width: 1120px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; padding: 2rem 1.5rem 3rem 1.5rem; border-left: none; border-right: none; border-bottom: 1px solid var(--border-glass); }
+            .main-viewport { padding: 3.5rem 2rem; margin-left: 0 !important; margin-right: 0 !important; }
+            .node-header { flex-direction: column; gap: 0.75rem; }
+            .node-badge { align-self: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="aurora-bg">
+        <div class="aurora-orb orb-1"></div>
+        <div class="aurora-orb orb-2"></div>
+    </div>
+
+    <div class="sidebar">
+        <div class="lang-control-panel">
+            <div class="slider-pill" id="slider-indicator"></div>
+            <button class="lang-toggle-btn" id="btn-en" onclick="setLanguage('en')">
+                <i class="fa-solid fa-globe"></i> EN
+            </button>
+            <button class="lang-toggle-btn" id="btn-ar" onclick="setLanguage('ar')">
+                <i class="fa-solid fa-signature"></i> عـربي
+            </button>
+        </div>
+
+        <div class="profile-container">
+            <img src="1625464292739.jpg" alt="Executive Identity Frame" class="profile-img">
+        </div>
+        
+        <div class="lang-en-view" style="width: 100%;">
+            <h1 class="name">Mazroof-Ul-Islam</h1>
+            <p class="subtitle">IT Support & Office Administration Expert</p>
+        </div>
+
+        <div class="lang-ar-view" style="width: 100%;">
+            <h1 class="name">مظروف الإسلام</h1>
+            <p class="subtitle">أخصائي الدعم الفني وتقنية المعلومات والإدارة التنفيذية</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active-tab" onclick="openTab(event, 'about-tab')">
+                <i class="fa-solid fa-user-astronaut"></i> 
+                <span class="lang-en-view">Overview Portal</span>
+                <span class="lang-ar-view">بوابة نظرة عامة</span>
+            </button>
+            <button class="tab-btn" onclick="openTab(event, 'skills-tab')">
+                <i class="fa-solid fa-cubes"></i> 
+                <span class="lang-en-view">Skill Architecture</span>
+                <span class="lang-ar-view">هيكلية المهارات</span>
+            </button>
+            <button class="tab-btn" onclick="openTab(event, 'experience-tab')">
+                <i class="fa-solid fa-timeline"></i> 
+                <span class="lang-en-view">Career Milestones</span>
+                <span class="lang-ar-view">المحطات المهنية</span>
+            </button>
+            <button class="tab-btn" onclick="openTab(event, 'education-tab')">
+                <i class="fa-solid fa-award"></i> 
+                <span class="lang-en-view">Academic & Credentials</span>
+                <span class="lang-ar-view">المؤهلات والاعتمادات</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-viewport">
+
+        <div id="about-tab" class="tab-content active-content">
+            <h2>
+                <i class="fa-solid fa-id-card"></i> 
+                <span class="lang-en-view">Professional Brief</span>
+                <span class="lang-ar-view">ملخص مهني تنفيذي</span>
+            </h2>
+            <div class="glass-card">
+                <p class="summary-text lang-en-view">Highly motivated IT Professional and Executive Administrator with extensive experience and a Bachelor of Computer Science. Expert at balancing Level 1 technical support with high-level office administration and precise data management. Proven ability to streamline business operations, manage IT assets, and provide exceptional technical and executive-level assistance.</p>
+                <p class="summary-text lang-ar-view">متخصص طموح في مجالات الدعم الفني والإدارة التنفيذية، أمتلك خبرة تتجاوز 15 عاماً وحاصل على درجة البكالوريوس في علوم الحاسب الآلي. أتميز بمهارة استثنائية في الموازنة بين تقديم خدمات الدعم الفني من المستوى الأول (Level 1) وإدارة المكاتب الإدارية بدقة وتطوير وإدخل البيانات. متمكن من تعزيز كفاءة العمليات التشغيلية، وحوكمة الأصول التقنية، وتقديم الحلول الفنية المتقدمة والدعم الشامل للإدارة العليا.</p>
+                
+                <div class="contact-deck">
+                    <div class="deck-pill">
+                        <i class="fa-solid fa-earth-asia"></i>
+                        <span class="lang-en-view">Saudi Arabia (Transferable Iqama)</span>
+                        <span class="lang-ar-view">المملكة العربية السعودية (إقامة قابلة للنقل)</span>
+                    </div>
+                    <a href="mailto:mazrooful_slm@hotmail.com" class="deck-pill">
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                        <span>mazrooful_slm@hotmail.com</span>
+                    </a>
+                    <div class="deck-pill">
+                        <i class="fa-solid fa-headset"></i>
+                        <span>+966-548868336</span>
+                    </div>
+                    <a href="https://linkedin.com/in/mazroof-ul-islam-451a7714" target="_blank" class="deck-pill">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                        <span class="lang-en-view">Connect via LinkedIn</span>
+                        <span class="lang-ar-view">تواصل معي عبر لينكد إن</span>
+                    </a>
+                </div>
+            </div>
+
+            <h2>
+                <i class="fa-solid fa-globe"></i> 
+                <span class="lang-en-view">Identity Profile</span>
+                <span class="lang-ar-view">التفاصيل الشخصية والهوية</span>
+            </h2>
+            <div class="glass-card">
+                <p class="summary-text" style="margin-bottom: 0.75rem;">
+                    <strong style="color:var(--accent-emerald);">
+                        <span class="lang-en-view">Multilingual Matrices:</span>
+                        <span class="lang-ar-view">اللغات والاتصال:</span>
+                    </strong> 
+                    <span class="lang-en-view">English, Arabic, Urdu, Pashto.</span>
+                    <span class="lang-ar-view">الإنجليزية، العربية، الأوردو، البشتو.</span>
+                </p>
+                <p class="summary-text">
+                    <strong style="color:var(--accent-emerald);">
+                        <span class="lang-en-view">Nationality Status:</span>
+                        <span class="lang-ar-view">الجنسية:</span>
+                    </strong> 
+                    <span class="lang-en-view">Pakistani.</span>
+                    <span class="lang-ar-view">باكستاني.</span>
+                </p>
+            </div>
+        </div>
+
+        <div id="skills-tab" class="tab-content">
+            <h2>
+                <i class="fa-solid fa-gears"></i> 
+                <span class="lang-en-view">Core Competency Matrix</span>
+                <span class="lang-ar-view">مصفوفة الكفاءات والقدرات الأساسية</span>
+            </h2>
+            <div class="glass-card">
+                <div class="skills-matrix">
+                    <div class="matrix-item">
+                        <h3>
+                            <i class="fa-solid fa-terminal"></i> 
+                            <span class="lang-en-view">IT Support & Systems</span>
+                            <span class="lang-ar-view">الدعم الفني والأنظمة</span>
+                        </h3>
+                        <ul class="interactive-list lang-en-view">
+                            <li>Windows OS installation, configuration, and Level 1 enterprise troubleshooting.</li>
+                            <li>Diagnostic maintenance of CPU hardware architectures, internals, and corporate peripherals.</li>
+                        </ul>
+                        <ul class="interactive-list lang-ar-view">
+                            <li>تثبيت، وإعداد، وترقية نظام التشغيل Windows وبيئات استكشاف الأخطاء للمؤسسات.</li>
+                            <li>الصيانة التشخيصية لمعالجات الحاسب الآلي الحديثة والقطع والملحقات الداخلية لتقليل الأعطال.</li>
+                        </ul>
+                    </div>
+                    <div class="matrix-item">
+                        <h3>
+                            <i class="fa-solid fa-route"></i> 
+                            <span class="lang-en-view">Networking & Infrastructures</span>
+                            <span class="lang-ar-view">البنية التحتية للشبكات</span>
+                        </h3>
+                        <ul class="interactive-list lang-en-view">
+                            <li>Isolating network link constraints and local corporate connectivity problems.</li>
+                            <li>IP addressing provisioning, network topologies, and client-server configurations.</li>
+                        </ul>
+                        <ul class="interactive-list lang-ar-view">
+                            <li>عزل وحل مشكلات الاتصال بالشبكة المحلية واستكشاف ثغرات الربط الداخلي للشركات.</li>
+                            <li>تخصيص وتجهيز عناوين وبروتوكولات الإنترنت (IP Addressing) والشبكات الفرعية.</li>
+                        </ul>
+                    </div>
+                    <div class="matrix-item">
+                        <h3>
+                            <i class="fa-solid fa-layer-group"></i> 
+                            <span class="lang-en-view">Enterprise Software Platforms</span>
+                            <span class="lang-ar-view">البرمجيات والأنظمة المؤسسية</span>
+                        </h3>
+                        <ul class="interactive-list lang-en-view">
+                            <li>Advanced utilization of MS Office Suite with high data-mapping expertise in Excel.</li>
+                            <li>IBM JDA supply chain data configurations and Lotus Notes administration.</li>
+                        </ul>
+                        <ul class="interactive-list lang-ar-view">
+                            <li>إجادة متقدمة لحزمة برامج مايكروسوفت أوفيس مع كفاءة استثنائية في تخطيط وتحليل بيانات الإكسل.</li>
+                            <li>تهيئة وتتبع البيانات عبر برمجيات سلاسل الإمداد المتخصصة IBM JDA ونظام Lotus Notes.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="experience-tab" class="tab-content">
+            <h2>
+                <i class="fa-solid fa-briefcase"></i> 
+                <span class="lang-en-view">Professional Chronology</span>
+                <span class="lang-ar-view">التسلسل الزمني المهني والخبرات</span>
+            </h2>
+            <div class="glass-card">
+                <div class="dynamic-timeline">
+                    
+                    <div class="timeline-node">
+                        <div class="node-header">
+                            <div>
+                                <div class="node-title">
+                                    <span class="lang-en-view">Technical Support & Office Administrator</span>
+                                    <span class="lang-ar-view">مسؤول الدعم الفني والمساعد الإداري التنفيذي</span>
+                                </div>
+                                <div class="node-organization">
+                                    <span class="lang-en-view">CERTIFIED IT CONSULTANTS COMPANY (CIC)</span>
+                                    <span class="lang-ar-view">شركة مستشارو تكنولوجيا المعلومات المعتمدون (CIC)</span>
+                                </div>
+                            </div>
+                            <span class="node-badge">
+                                <span class="lang-en-view">Jan 2010 - March 2026</span>
+                                <span class="lang-ar-view">يناير 2010 - مارس 2026</span>
+                            </span>
+                        </div>
+                        <ul class="interactive-list lang-en-view">
+                            <li>Provided foundational technical support for hardware and software to ensure uninterrupted office operations.</li>
+                            <li>Conducted routine maintenance and troubleshooting for workstations and peripheral devices.</li>
+                            <li>Acted as the primary point of contact for resolving basic user connectivity and software-related issues.</li>
+                            <li>Managed complex executive calendars and coordinated staff tasks to maintain high productivity.</li>
+                            <li>Enhanced office operational efficiency by 15% through a custom digital filing implementation.</li>
+                            <li>Negotiated vendor contracts and managed IT inventory, achieving a 10% reduction in costs.</li>
+                        </ul>
+                        <ul class="interactive-list lang-ar-view">
+                            <li>تقديم الدعم الفني الأساسي والنوعي للعتاد والبرمجيات لضمان سير أعمال المكاتب دون انقطاع.</li>
+                            <li>إجراء عمليات صيانة وجدولة دورية واستكشاف الأخطاء لمحطات العمل والأجهزة الطرفية والطابعات.</li>
+                            <li>تمثيل نقطة الاتصال الرئيسية لحل مشكلات اتصال المستخدمين بالشبكة والبرمجيات بفاعلية وسرعة.</li>
+                            <li>تنظيم وإدارة الجداول والمواعيد التنفيذية المعقدة وتنسيق مهام الموظفين للحفاظ على بيئة عمل عالية الإنتاجية.</li>
+                            <li>رفع كفاءة العمليات الإدارية والمكتبية بنسبة 15% من خلال تصميم وبناء نظام أرشفة رقمي متكامل للملفات.</li>
+                            <li>التفاوض مع موردي التكنولوجيا وإدارة مخزون تكنولوجيا المعلومات، مما أسهم في خفض التكاليف بنسبة 10%.</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-node">
+                        <div class="node-header">
+                            <div>
+                                <div class="node-title">
+                                    <span class="lang-en-view">Customer Service Representative (CSR)</span>
+                                    <span class="lang-ar-view">ممثل خدمة العملاء التقنية (CSR)</span>
+                                </div>
+                                <div class="node-organization">
+                                    <span class="lang-en-view">REGUS Company</span>
+                                    <span class="lang-ar-view">شركة ريجس العالمية (Regus)</span>
+                                </div>
+                            </div>
+                            <span class="node-badge">
+                                <span class="lang-en-view">Jan 2009 - Dec 2009</span>
+                                <span class="lang-ar-view">يناير 2009 - ديسمبر 2009</span>
+                            </span>
+                        </div>
+                        <ul class="interactive-list lang-en-view">
+                            <li>Provided technical assistance for meeting room setups, including Wi-Fi and presentation equipment.</li>
+                            <li>Delivered first-point-of-contact service, maintaining an exceptional 95% client satisfaction rating.</li>
+                        </ul>
+                        <ul class="interactive-list lang-ar-view">
+                            <li>تقديم المساعدة الفنية المباشرة لتجهيز قاعات الاجتماعات والربط بشبكات الواي فاي وأجهزة العرض المتطورة.</li>
+                            <li>التميز كمقدم خدمة الخط الأول، والحفاظ على تقييم رضا العملاء بنسبة استثنائية بلغت 95%.</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-node">
+                        <div class="node-header">
+                            <div>
+                                <div class="node-title">
+                                    <span class="lang-en-view">Technical Support Engineer</span>
+                                    <span class="lang-ar-view">مهندس دعم فني وصيانة أجهزة</span>
+                                </div>
+                                <div class="node-organization">
+                                    <span class="lang-en-view">SALEHIA Company</span>
+                                    <span class="lang-ar-view">شركة الصالحية</span>
+                                </div>
+                            </div>
+                            <span class="node-badge">
+                                <span class="lang-en-view">Jan 2008 - Dec 2008</span>
+                                <span class="lang-ar-view">يناير 2008 - ديسمبر 2008</span>
+                            </span>
+                        </div>
+                        <ul class="interactive-list lang-en-view">
+                            <li>Managed full lifecycle workstation setups, including configuration and optimization of Windows OS.</li>
+                            <li>Diagnosed and resolved hardware failures involving motherboards, CPUs, RAM, and storage structures.</li>
+                        </ul>
+                        <ul class="interactive-list lang-ar-view">
+                            <li>إدارة دورة حياة محطات العمل بالكامل، بما يشمل تثبيت وتكوين وتحسين أنظمة التشغيل للمستخدمين النهائيين.</li>
+                            <li>تشخيص وإصلاح أعطال اللوحات الأم (Motherboards)، المعالجات، الذاكرة العشوائية ووحدات التخزين.</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-node">
+                        <div class="node-header">
+                            <div>
+                                <div class="node-title">
+                                    <span class="lang-en-view">Computer Operator (Data Entry & Management)</span>
+                                    <span class="lang-ar-view">مشغل حاسب آلي (إدخال وإدارة البيانات)</span>
+                                </div>
+                                <div class="node-organization">
+                                    <span class="lang-en-view">Al OTHAIM HOLDING COMPANY</span>
+                                    <span class="lang-ar-view">شركة العثيم القابضة</span>
+                                </div>
+                            </div>
+                            <span class="node-badge">
+                                <span class="lang-en-view">April 2004 - Oct 2006</span>
+                                <span class="lang-ar-view">أبريل 2004 - أكتوبر 2006</span>
+                            </span>
+                        </div>
+                        <ul class="interactive-list lang-en-view">
+                            <li>Managed daily input and verification of high-volume vendor transaction files with precision.</li>
+                            <li>Utilized IBM JDA software to map, audit, and update core supply chain resource records.</li>
+                        </ul>
+                        <ul class="interactive-list lang-ar-view">
+                            <li>إدارة المدخلات اليومية والتدقيق الشامل لبيانات معاملات الموردين الضخمة وبأعلى درجات الدقة.</li>
+                            <li>توظيف برمجيات IBM JDA لمتابعة وتحديث مستويات المخزون وحركات سجلات سلاسل الإمداد بدقة.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="education-tab" class="tab-content">
+            <h2>
+                <i class="fa-solid fa-user-graduate"></i> 
+                <span class="lang-en-view">Academic Foundations</span>
+                <span class="lang-ar-view">البنية والأسس الأكاديمية</span>
+            </h2>
+            <div class="glass-card">
+                <div class="accordion-wrapper">
+                    
+                    <div class="accordion-item is-open">
+                        <div class="accordion-trigger" onclick="toggleAccordion(this.parentElement)">
+                            <h4>
+                                <i class="fa-solid fa-graduation-cap" style="color:var(--accent-emerald);"></i> 
+                                <span class="lang-en-view">Bachelor of Computer Science (BS)</span>
+                                <span class="lang-ar-view">بكالوريوس علوم الحاسب الآلي (BS)</span>
+                            </h4>
+                            <i class="fa-solid fa-chevron-down chevron"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <span class="lang-en-view">Completed through the Virtual University of Pakistan (Graduated 2021). Specializations evaluated covered software design engineering frameworks, relational database models, operating systems administration, and data communications networking.</span>
+                            <span class="lang-ar-view">إنجاز أكاديمي متميز من الجامعة الافتراضية في باكستان (تخرج عام 2021). شملت المناهج الدراسية هندسة البرمجيات، قواعد البيانات المتقدمة ونمذجتها، إدارة أنظمة التشغيل، وشبكات وبروتوكولات نقل البيانات.</span>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-trigger" onclick="toggleAccordion(this.parentElement)">
+                            <h4>
+                                <i class="fa-solid fa-school" style="color:var(--accent-neon-blue);"></i> 
+                                <span class="lang-en-view">F.Sc (Intermediate - Pre-Engineering)</span>
+                                <span class="lang-ar-view">شهادة العلوم / الثانوية العامة (F.Sc)</span>
+                            </h4>
+                            <i class="fa-solid fa-chevron-down chevron"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <span class="lang-en-view">Completed pre-engineering tracks under BISE Swat K.P.K, Pakistan. Focus matrix evaluated structural physics parameters, operational mathematical systems, and analytical research modules.</span>
+                            <span class="lang-ar-view">إتَمام مرحلة العلوم والتعليم قبل الهندسي من مجلس التعليم الثانوي العالي BISE Swat في كيه بي كيه، باكستان. شملت الدراسة علوم الفيزياء التطبيقية والحسابات الرياضية المتقدمة.</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <h2>
+                <i class="fa-solid fa-shield-halved"></i> 
+                <span class="lang-en-view">Engineering Credentials</span>
+                <span class="lang-ar-view">الشهادات الهندسية والاعتمادات الاحترافية</span>
+            </h2>
+            <div class="glass-card">
+                <div class="skills-matrix">
+                    <div class="matrix-item" style="padding: 1.5rem; display:flex; gap:1.25rem; align-items:center;">
+                        <i class="fa-solid fa-passport" style="font-size:1.8rem; color:var(--accent-emerald);"></i>
+                        <div>
+                            <h4 style="font-weight:700;">MCSE Architecture</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted);">Microsoft Certified Systems Engineer</p>
+                        </div>
+                    </div>
+                    <div class="matrix-item" style="padding: 1.5rem; display:flex; gap:1.25rem; align-items:center;">
+                        <i class="fa-solid fa-network-wired" style="font-size:1.8rem; color:var(--accent-emerald);"></i>
+                        <div>
+                            <h4 style="font-weight:700;">CCNA Routing</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted);">Cisco Certified Network Associate</p>
+                        </div>
+                    </div>
+                    <div class="matrix-item" style="padding: 1.5rem; display:flex; gap:1.25rem; align-items:center;">
+                        <i class="fa-solid fa-server" style="font-size:1.8rem; color:var(--accent-neon-blue);"></i>
+                        <div>
+                            <h4 style="font-weight:700;">MCSA Operations</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted);">Microsoft Certified Systems Administrator</p>
+                        </div>
+                    </div>
+                    <div class="matrix-item" style="padding: 1.5rem; display:flex; gap:1.25rem; align-items:center;">
+                        <i class="fa-solid fa-microchip" style="font-size:1.8rem; color:var(--accent-neon-blue);"></i>
+                        <div>
+                            <h4 style="font-weight:700;">MCP Domain</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted);">Microsoft Certified Professional</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Smooth Language Switching Engine
+        function setLanguage(lang) {
+            const root = document.getElementById("portfolio-root");
+            const btnEn = document.getElementById("btn-en");
+            const btnAr = document.getElementById("btn-ar");
+            const indicator = document.getElementById("slider-indicator");
+
+            root.setAttribute("lang", lang);
+
+            if(lang === 'en') {
+                root.setAttribute("dir", "ltr");
+                indicator.style.transform = "translateX(0%)";
+                btnEn.style.color = "#030712"; 
+                btnAr.style.color = "#64748b"; 
+            } else {
+                root.setAttribute("dir", "rtl");
+                indicator.style.transform = "translateX(100%)";
+                btnAr.style.color = "#030712"; 
+                btnEn.style.color = "#64748b"; 
+            }
+        }
+
+        // Navigation Tabs Controller - Safely targets parent element on inner clicks
+        function openTab(event, tabId) {
+            const tabContents = document.querySelectorAll(".tab-content");
+            const tabButtons = document.querySelectorAll(".tab-btn");
+
+            // Find the button wrapper even if inner text/icon captures the click
+            const targetButton = event.target.closest('.tab-btn');
+            if (!targetButton) return;
+
+            tabContents.forEach(content => content.classList.remove("active-content"));
+            tabButtons.forEach(button => button.classList.remove("active-tab"));
+
+            document.getElementById(tabId).classList.add("active-content");
+            targetButton.classList.add("active-tab");
+
+            // Scroll to view instantly inside smaller responsive screens
+            if(window.innerWidth <= 1120) {
+                document.querySelector(".main-viewport").scrollIntoView({ behavior: "smooth" });
+            }
+        }
+
+        // Accordion Management Framework
+        function toggleAccordion(element) {
+            const items = document.querySelectorAll(".accordion-item");
+            const isOpen = element.classList.contains("is-open");
+            
+            items.forEach(item => item.classList.remove("is-open"));
+            if(!isOpen) {
+                element.classList.add("is-open");
+            }
+        }
+
+        // Explicitly trigger initialization routine on startup
+        window.addEventListener('DOMContentLoaded', () => {
+            setLanguage('en');
+        });
+    </script>
+</body>
+</html>
