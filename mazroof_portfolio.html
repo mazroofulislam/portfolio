@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="portfolio-root">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mazroof-Ul-Islam | Executive IT Portfolio</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ── DESIGN TOKENS ─────────────────────────────────────────── */
+        :root {
+            --bg-base:        #060C1A;
+            --bg-panel:       #0A1222;
+            --bg-card:        rgba(12, 20, 38, 0.70);
+            --bg-sidebar:     rgba(5, 9, 20, 0.92);
+
+            --gold:           #C8973A;
+            --gold-light:     #E4BA6A;
+            --gold-dim:       rgba(200, 151, 58, 0.18);
+            --gold-border:    rgba(200, 151, 58, 0.28);
+
+            --slate:          #4A7FA5;
+            --slate-dim:      rgba(74, 127, 165, 0.15);
+            --slate-border:   rgba(74, 127, 165, 0.25);
+
+            --text-white:     #F4F7FC;
+            --text-silver:    #C8D4E3;
+            --text-muted:     #7A90AA;
+
+            --border-glass:   rgba(255,255,255,0.07);
+            --border-soft:    rgba(255,255,255,0.04);
+
+            --radius-xl:      26px;
+            --radius-lg:      18px;
+            --radius-md:      12px;
+
+            --shadow-deep:    0 24px 64px rgba(0,0,0,0.55);
+            --shadow-gold:    0 0 40px rgba(200,151,58,0.12);
+
+            --font-display:   'Syne', sans-serif;
+            --font-body:      'Inter', sans-serif;
+        }
+
+        [dir="rtl"] {
+            --font-body: 'Cairo', sans-serif;
+            --font-display: 'Cairo', sans-serif;
+        }
+
+        /* ── RESET ──────────────────────────────────────────────────── */
+        *, *::before, *::after {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        /* ── BODY / BACKGROUND ──────────────────────────────────────── */
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-base);
+            color: var(--text-white);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Subtle grid overlay */
+        body::before {
+            content: "";
+            position: fixed; inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Ambient glow orbs */
+        .ambient {
+            position: fixed; inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.55;
+        }
+        .orb-1 {
+            width: 520px; height: 520px;
+            top: -120px; left: -80px;
+            background: radial-gradient(circle, rgba(200,151,58,0.20), transparent 70%);
+            animation: drift 20s infinite alternate ease-in-out;
+        }
+        .orb-2 {
+            width: 600px; height: 600px;
+            bottom: -160px; right: -80px;
+            background: radial-gradient(circle, rgba(74,127,165,0.22), transparent 70%);
+            animation: drift 26s infinite alternate-reverse ease-in-out;
+        }
+        .orb-3 {
+            width: 380px; height: 380px;
+            top: 40%; left: 44%;
+            background: radial-gradient(circle, rgba(200,151,58,0.08), transparent 70%);
+            animation: drift 32s infinite alternate ease-in-out;
+        }
+        @keyframes drift {
+            from { transform: translate(0,0) scale(1); }
+            to   { transform: translate(30px, 20px) scale(1.08); }
+        }
+
+        /* ── SIDEBAR ─────────────────────────────────────────────────── */
+        .sidebar {
+            width: 340px;
+            background: var(--bg-sidebar);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            padding: 2rem 1.4rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0;
+            z-index: 100;
+            box-shadow: 8px 0 48px rgba(0,0,0,0.35);
+        }
+        [dir="ltr"] .sidebar { left: 0; border-right: 1px solid var(--border-glass); }
+        [dir="rtl"] .sidebar { right: 0; border-left: 1px solid var(--border-glass); }
+
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 4px; }
+
+        /* ── LANGUAGE TOGGLE ─────────────────────────────────────────── */
+        .lang-panel {
+            width: 100%;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-glass);
+            padding: 0.3rem;
+            border-radius: 999px;
+            display: flex;
+            position: relative;
+            margin-bottom: 2rem;
+            flex-shrink: 0;
+        }
+        .lang-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.7rem 0;
+            font-size: 0.88rem;
+            font-weight: 700;
+            font-family: var(--font-body);
+            cursor: pointer;
+            z-index: 2;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            letter-spacing: 0.03em;
+        }
+        .lang-btn.active-lang { color: #060C1A; }
+        .slider-pill {
+            position: absolute;
+            top: 4px; bottom: 4px;
+            width: calc(50% - 4px);
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-radius: 999px;
+            z-index: 1;
+            transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+            box-shadow: 0 4px 20px rgba(200,151,58,0.30);
+        }
+
+        /* ── PROFILE SHELL ───────────────────────────────────────────── */
+        .profile-shell {
+            width: 100%;
+            padding: 1.8rem 1rem 1.6rem;
+            border: 1px solid var(--border-glass);
+            border-radius: 22px;
+            background: rgba(255,255,255,0.02);
+            margin-bottom: 1.6rem;
+            text-align: center;
+        }
+
+        /* Medallion monogram */
+        .monogram-wrap {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+        }
+        .monogram-ring {
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--gold), var(--gold-light), var(--slate), var(--gold));
+            animation: spin-slow 12s linear infinite;
+            opacity: 0.85;
+        }
+        .monogram-ring::after {
+            content: "";
+            position: absolute;
+            inset: 3px;
+            border-radius: 50%;
+            background: var(--bg-base);
+        }
+        @keyframes spin-slow { to { transform: rotate(360deg); } }
+        .monogram-letter {
+            position: relative;
+            z-index: 2;
+            width: 110px; height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #0D1628, #060C1A);
+            border: 2px solid var(--gold-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--gold);
+            text-shadow: 0 0 24px rgba(200,151,58,0.50);
+            box-shadow: 0 0 32px rgba(200,151,58,0.15);
+        }
+
+        .prof-name {
+            font-family: var(--font-display);
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: var(--text-white);
+            line-height: 1.2;
+            margin-bottom: 0.6rem;
+            letter-spacing: -0.01em;
+        }
+        .prof-title {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+        }
+        .prof-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--gold-dim);
+            border: 1px solid var(--gold-border);
+            color: var(--gold-light);
+            padding: 0.4rem 0.9rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        /* ── NAV TABS ────────────────────────────────────────────────── */
+        .nav-tabs { width: 100%; display: flex; flex-direction: column; gap: 0.5rem; }
+
+        .tab-btn {
+            width: 100%;
+            background: transparent;
+            border: 1px solid transparent;
+            padding: 0.85rem 1rem;
+            border-radius: var(--radius-md);
+            font-size: 0.91rem;
+            font-weight: 600;
+            font-family: var(--font-body);
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            transition: all 0.25s ease;
+            letter-spacing: 0.01em;
+        }
+        [dir="ltr"] .tab-btn { text-align: left; }
+        [dir="rtl"] .tab-btn { text-align: right; }
+
+        .tab-btn .icon-wrap {
+            width: 36px; height: 36px;
+            border-radius: 9px;
+            background: rgba(255,255,255,0.04);
+            display: grid;
+            place-items: center;
+            color: var(--text-muted);
+            flex-shrink: 0;
+            transition: all 0.25s ease;
+            font-size: 0.88rem;
+        }
+        .tab-btn:hover {
+            background: rgba(255,255,255,0.03);
+            border-color: var(--border-glass);
+            color: var(--text-silver);
+        }
+        .tab-btn:hover .icon-wrap { background: var(--slate-dim); color: var(--slate); }
+
+        .tab-btn.active-tab {
+            background: var(--gold-dim);
+            border-color: var(--gold-border);
+            color: var(--gold-light);
+        }
+        .tab-btn.active-tab .icon-wrap {
+            background: rgba(200,151,58,0.15);
+            color: var(--gold);
+        }
+
+        /* ── MAIN VIEWPORT ───────────────────────────────────────────── */
+        .main-viewport {
+            flex: 1;
+            padding: 3.5rem 3.5rem 5rem;
+            position: relative;
+            z-index: 10;
+        }
+        [dir="ltr"] .main-viewport { margin-left: 340px; }
+        [dir="rtl"] .main-viewport { margin-right: 340px; }
+
+        /* ── HERO BANNER ─────────────────────────────────────────────── */
+        .hero-banner {
+            border: 1px solid var(--border-glass);
+            background: linear-gradient(135deg, rgba(200,151,58,0.07) 0%, rgba(74,127,165,0.07) 100%);
+            border-radius: var(--radius-xl);
+            padding: 2.4rem 2.4rem 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow-deep);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-banner::before {
+            content: "";
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 220px; height: 220px;
+            background: radial-gradient(circle, rgba(200,151,58,0.14), transparent 65%);
+            border-radius: 50%;
+        }
+        .hero-eyebrow {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .hero-eyebrow::before {
+            content: "";
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 2px;
+        }
+        .hero-banner h1 {
+            font-family: var(--font-display);
+            font-size: 2.1rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 0.9rem;
+            color: var(--text-white);
+            letter-spacing: -0.02em;
+        }
+        .hero-banner p {
+            color: var(--text-silver);
+            font-size: 1rem;
+            line-height: 1.85;
+            max-width: 820px;
+            font-weight: 400;
+        }
+
+        .stat-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.9rem;
+            margin-top: 2rem;
+        }
+        .stat-box {
+            background: rgba(255,255,255,0.025);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 1.1rem 1.2rem;
+        }
+        .stat-box h4 {
+            font-family: var(--font-display);
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 0.25rem;
+        }
+        .stat-box p {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        /* ── SECTION HEADING ─────────────────────────────────────────── */
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text-white);
+            margin-bottom: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            letter-spacing: -0.01em;
+        }
+        h2 .h2-icon {
+            color: var(--gold);
+            font-size: 1rem;
+            background: var(--gold-dim);
+            width: 42px; height: 42px;
+            border-radius: 11px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--gold-border);
+            flex-shrink: 0;
+        }
+
+        /* ── GLASS CARD ──────────────────────────────────────────────── */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-deep);
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: var(--gold-border);
+            transform: translateY(-3px);
+        }
+
+        /* ── TAB SYSTEM ──────────────────────────────────────────────── */
+        .tab-content { display: none; animation: fadeUp 0.4s ease forwards; }
+        .tab-content.active-content { display: block; }
+        @keyframes fadeUp {
+            from { opacity:0; transform: translateY(14px); }
+            to   { opacity:1; transform: translateY(0); }
+        }
+
+        /* ── LANGUAGE VISIBILITY ─────────────────────────────────────── */
+        .en, .ar { display: none !important; }
+        html[lang="en"] .en { display: revert !important; }
+        html[lang="en"] .en-flex { display: flex !important; }
+        html[lang="en"] span.en { display: inline !important; }
+        html[lang="ar"] .ar { display: revert !important; }
+        html[lang="ar"] .ar-flex { display: flex !important; }
+        html[lang="ar"] span.ar { display: inline !important; }
+
+        /* ── SUMMARY TEXT ────────────────────────────────────────────── */
+        .summary-text {
+            font-size: 1rem;
+            line-height: 1.95;
+            color: var(--text-silver);
+            font-weight: 400;
+        }
+        [dir="rtl"] .summary-text { line-height: 2.1; }
+
+        /* ── CONTACT CARDS ───────────────────────────────────────────── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.9rem;
+            margin-top: 1.6rem;
+        }
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.9rem 1rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: var(--text-silver);
+            transition: all 0.25s ease;
+        }
+        .contact-card:hover {
+            border-color: var(--gold-border);
+            background: var(--gold-dim);
+            transform: translateY(-2px);
+        }
+        .contact-card .c-icon {
+            width: 40px; height: 40px;
+            background: var(--gold-dim);
+            border: 1px solid var(--gold-border);
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            color: var(--gold);
+            flex-shrink: 0;
+            font-size: 0.95rem;
+        }
+        .contact-card .c-text {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-silver);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        /* ── RTL phone number fix ── */
+        .phone-num {
+            direction: ltr;
+            unicode-bidi: embed;
+            display: inline-block;
+        }
+
+        /* ── SKILLS MATRIX ───────────────────────────────────────────── */
+        .skills-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.2rem;
+        }
+        .skill-cell {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            transition: all 0.28s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .skill-cell::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--gold-dim), transparent 50%, var(--slate-dim));
+            opacity: 0;
+            transition: opacity 0.28s ease;
+        }
+        .skill-cell:hover { border-color: var(--gold-border); transform: translateY(-4px); }
+        .skill-cell:hover::after { opacity: 1; }
+        .skill-cell h3 {
+            font-family: var(--font-display);
+            font-size: 1.02rem;
+            font-weight: 700;
+            color: var(--text-white);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            position: relative;
+            z-index: 1;
+        }
+        .skill-cell h3 i { color: var(--gold); }
+
+        /* ── BULLET LIST ─────────────────────────────────────────────── */
+        .dot-list {
+            list-style: none;
+            position: relative;
+            z-index: 1;
+        }
+        .dot-list li {
+            position: relative;
+            margin-bottom: 0.75rem;
+            line-height: 1.75;
+            color: var(--text-silver);
+            font-size: 0.92rem;
+        }
+        [dir="ltr"] .dot-list li { padding-left: 1.3rem; }
+        [dir="rtl"] .dot-list li { padding-right: 1.3rem; }
+        .dot-list li::before {
+            content: "";
+            position: absolute;
+            top: 0.65rem;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            opacity: 0.75;
+        }
+        [dir="ltr"] .dot-list li::before { left: 0; }
+        [dir="rtl"] .dot-list li::before { right: 0; }
+
+        /* ── TIMELINE ────────────────────────────────────────────────── */
+        .timeline { position: relative; }
+        [dir="ltr"] .timeline { padding-left: 2.6rem; }
+        [dir="rtl"] .timeline { padding-right: 2.6rem; }
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 8px; bottom: 8px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--gold), var(--slate) 70%, transparent);
+        }
+        [dir="ltr"] .timeline::before { left: 8px; }
+        [dir="rtl"] .timeline::before { right: 8px; }
+
+        .t-node { position: relative; padding-bottom: 2.4rem; }
+        .t-node:last-child { padding-bottom: 0; }
+        .t-node::before {
+            content: "";
+            position: absolute;
+            top: 8px;
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            background: var(--bg-base);
+            border: 2.5px solid var(--gold);
+            box-shadow: 0 0 14px rgba(200,151,58,0.45);
+            z-index: 5;
+        }
+        [dir="ltr"] .t-node::before { left: calc(-2.6rem + 1px); }
+        [dir="rtl"] .t-node::before { right: calc(-2.6rem + 1px); }
+
+        .t-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 0.9rem;
+            padding: 1.1rem 1.2rem 0;
+        }
+        .t-role {
+            font-family: var(--font-display);
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: var(--text-white);
+        }
+        .t-org {
+            font-size: 0.88rem;
+            color: var(--gold);
+            font-weight: 600;
+            margin-top: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .t-badge {
+            background: var(--gold-dim);
+            color: var(--gold-light);
+            padding: 0.4rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            border: 1px solid var(--gold-border);
+            white-space: nowrap;
+            font-family: var(--font-display);
+        }
+        .t-node .dot-list { padding: 0 1.2rem 1.2rem; }
+
+        /* ── METRIC PILLS ────────────────────────────────────────────── */
+        .metric-row {
+            display: flex;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+            margin-top: 0.6rem;
+            padding: 0 1.2rem 1.2rem;
+        }
+        .metric-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--slate-dim);
+            border: 1px solid var(--slate-border);
+            color: #9DC4DF;
+            padding: 0.35rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+        .metric-pill i { font-size: 0.7rem; }
+
+        /* ── ACCORDION ───────────────────────────────────────────────── */
+        .accordion-wrap { display: flex; flex-direction: column; gap: 0.85rem; }
+        .acc-item {
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            background: rgba(255,255,255,0.02);
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+        .acc-item.open { border-color: var(--gold-border); background: var(--gold-dim); }
+        .acc-trigger {
+            padding: 1.1rem 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            gap: 1rem;
+        }
+        .acc-trigger h4 {
+            font-family: var(--font-display);
+            font-size: 0.98rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-silver);
+        }
+        .acc-item.open .acc-trigger h4 { color: var(--gold-light); }
+        .chevron { transition: transform 0.3s; color: var(--text-muted); }
+        .acc-item.open .chevron { transform: rotate(180deg); color: var(--gold); }
+        .acc-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.35s ease;
+            padding: 0 1.3rem;
+            color: var(--text-silver);
+            line-height: 1.9;
+            font-size: 0.93rem;
+        }
+        .acc-item.open .acc-body { max-height: 300px; padding: 0.2rem 1.3rem 1.3rem; }
+
+        /* ── CERT CARDS ──────────────────────────────────────────────── */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .cert-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 1.3rem;
+            transition: all 0.25s ease;
+        }
+        .cert-card:hover { border-color: var(--gold-border); transform: translateY(-3px); }
+        .cert-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 0.3rem;
+        }
+        .cert-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .cert-card .cert-icon {
+            font-size: 1.1rem;
+            color: var(--slate);
+            margin-bottom: 0.6rem;
+        }
+
+        /* ── DIVIDER ─────────────────────────────────────────────────── */
+        .section-gap { margin-top: 2.8rem; }
+
+        /* ── RESPONSIVE ──────────────────────────────────────────────── */
+        @media (max-width: 1100px) {
+            body { flex-direction: column; }
+            .sidebar { width:100%; height:auto; position:relative; border-right:none!important; border-left:none!important; border-bottom:1px solid var(--border-glass); box-shadow:none; }
+            .main-viewport { margin-left:0!important; margin-right:0!important; padding:2rem 1.2rem 3.5rem; }
+            .hero-banner h1 { font-size:1.65rem; }
+            .t-header { flex-direction:column; }
+            .t-badge { align-self:flex-start; }
+            .stat-strip { grid-template-columns:1fr; }
+        }
+        @media (max-width: 640px) {
+            .hero-banner { padding:1.4rem; }
+            .glass-card { padding:1.3rem; }
+            .hero-banner h1 { font-size:1.4rem; }
+            h2 { font-size:1.3rem; }
+            .monogram-letter { width:90px; height:90px; font-size:2.4rem; }
+            .prof-name { font-size:1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ambient background -->
+    <div class="ambient" aria-hidden="true">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+    <aside class="sidebar" role="navigation">
+
+        <!-- Language Toggle -->
+        <div class="lang-panel">
+            <div class="slider-pill" id="slider-pill"></div>
+            <button class="lang-btn active-lang" id="btn-en" onclick="setLang('en')">
+                <i class="fa-solid fa-globe"></i> EN
+            </button>
+            <button class="lang-btn" id="btn-ar" onclick="setLang('ar')">
+                <i class="fa-solid fa-pen-nib"></i> عربي
+            </button>
+        </div>
+
+        <!-- Profile -->
+        <div class="profile-shell">
+            <div class="monogram-wrap">
+                <div class="monogram-ring"></div>
+                <div class="monogram-letter">M</div>
+            </div>
+
+            <div class="en" style="width:100%">
+                <p class="prof-name">Mazroof-Ul-Islam</p>
+                <p class="prof-title">IT Support &nbsp;·&nbsp; Office Administration<br>Executive Assistance</p>
+                <span class="prof-badge"><i class="fa-solid fa-microchip"></i> Digital Operations</span>
+            </div>
+            <div class="ar" style="width:100%">
+                <p class="prof-name">مظروف الإسلام</p>
+                <p class="prof-title">الدعم الفني &nbsp;·&nbsp; الإدارة المكتبية<br>المساندة التنفيذية</p>
+                <span class="prof-badge"><i class="fa-solid fa-microchip"></i> متخصص العمليات الرقمية</span>
+            </div>
+        </div>
+
+        <!-- Nav -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active-tab" onclick="openTab(event,'tab-about')">
+                <span class="icon-wrap"><i class="fa-solid fa-user"></i></span>
+                <span class="en">Overview</span><span class="ar">نظرة عامة</span>
+            </button>
+            <button class="tab-btn" onclick="openTab(event,'tab-skills')">
+                <span class="icon-wrap"><i class="fa-solid fa-gears"></i></span>
+                <span class="en">Skills</span><span class="ar">المهارات</span>
+            </button>
+            <button class="tab-btn" onclick="openTab(event,'tab-experience')">
+                <span class="icon-wrap"><i class="fa-solid fa-briefcase"></i></span>
+                <span class="en">Experience</span><span class="ar">الخبرات</span>
+            </button>
+            <button class="tab-btn" onclick="openTab(event,'tab-education')">
+                <span class="icon-wrap"><i class="fa-solid fa-graduation-cap"></i></span>
+                <span class="en">Education</span><span class="ar">التعليم</span>
+            </button>
+        </nav>
+    </aside>
+
+    <!-- ═══════════════════ MAIN ═══════════════════ -->
+    <main class="main-viewport">
+
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <div class="hero-eyebrow en">Executive IT Portfolio</div>
+            <div class="hero-eyebrow ar">الملف التنفيذي للدعم الفني</div>
+
+            <h1 class="en">Building efficient workplaces through IT support and executive coordination.</h1>
+            <h1 class="ar">بناء بيئات عمل أكثر كفاءة من خلال الدعم الفني والتنسيق التنفيذي.</h1>
+
+            <p class="en">Experienced IT support and administrative professional with a strong background in technical troubleshooting, office operations, user support, data management, and executive assistance.</p>
+            <p class="ar">محترف ذو خبرة في الدعم الفني والإدارة، مع خلفية قوية في معالجة المشكلات التقنية، تشغيل المكاتب، دعم المستخدمين، إدارة البيانات، والمساندة التنفيذية.</p>
+
+            <div class="stat-strip">
+                <div class="stat-box">
+                    <h4>15+</h4>
+                    <p class="en">Years of professional experience</p>
+                    <p class="ar">سنة من الخبرة المهنية</p>
+                </div>
+                <div class="stat-box">
+                    <h4>4</h4>
+                    <p class="en">Languages spoken</p>
+                    <p class="ar">لغات للتواصل</p>
+                </div>
+                <div class="stat-box">
+                    <h4>IT + Admin</h4>
+                    <p class="en">Hybrid operational expertise</p>
+                    <p class="ar">خبرة تشغيلية تقنية وإدارية</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ OVERVIEW TAB ══ -->
+        <section id="tab-about" class="tab-content active-content">
+            <h2>
+                <i class="fa-solid fa-id-card h2-icon"></i>
+                <span class="en">Professional Summary</span>
+                <span class="ar">الملخص المهني</span>
+            </h2>
+
+            <div class="glass-card">
+                <p class="summary-text en">
+                    Highly motivated IT professional and executive administrator with over 15 years of experience and a Bachelor of Computer Science. Expert at balancing Level 1 technical support with high-level office administration and precise data management. Proven ability to streamline business operations, manage IT assets, and provide exceptional technical and executive-level assistance. Iqama status: Transferable.
+                </p>
+                <p class="summary-text ar">
+                    متخصص طموح في الدعم الفني والإدارة التنفيذية، يمتلك أكثر من 15 عامًا من الخبرة وبكالوريوس في علوم الحاسب. يجمع بكفاءة بين الدعم الفني من المستوى الأول والإدارة المكتبية العالية المستوى وإدارة البيانات بدقة. يتمتع بقدرة مثبتة على تحسين العمليات التجارية وإدارة أصول تقنية المعلومات وتقديم المساعدة الفنية والتنفيذية على أعلى مستوى.
+                </p>
+
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="c-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <span class="c-text en">Kingdom of Saudi Arabia</span>
+                        <span class="c-text ar">المملكة العربية السعودية</span>
+                    </div>
+                    <a href="mailto:mazrooful_slm@hotmail.com" class="contact-card">
+                        <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <span class="c-text">mazrooful_slm@hotmail.com</span>
+                    </a>
+                    <div class="contact-card">
+                        <div class="c-icon"><i class="fa-solid fa-phone"></i></div>
+                        <!-- dir="ltr" ensures correct L→R digit order in Arabic mode -->
+                        <span class="c-text"><span class="phone-num">+966 54 886 8336</span></span>
+                    </div>
+                    <a href="https://linkedin.com/in/mazroof-ul-islam-451a7714" target="_blank" rel="noopener" class="contact-card">
+                        <div class="c-icon"><i class="fa-brands fa-linkedin-in"></i></div>
+                        <span class="c-text en">LinkedIn Profile</span>
+                        <span class="c-text ar">حساب لينكد إن</span>
+                    </a>
+                </div>
+            </div>
+
+            <h2 class="section-gap">
+                <i class="fa-solid fa-globe h2-icon"></i>
+                <span class="en">Personal Details</span>
+                <span class="ar">المعلومات الشخصية</span>
+            </h2>
+
+            <div class="glass-card">
+                <p class="summary-text">
+                    <strong style="color:var(--gold)">
+                        <span class="en">Languages:&nbsp;</span>
+                        <span class="ar">اللغات:&nbsp;</span>
+                    </strong>
+                    <span class="en">English, Arabic, Urdu, Pashto</span>
+                    <span class="ar">الإنجليزية، العربية، الأوردو، البشتو</span>
+                </p>
+                <p class="summary-text" style="margin-top:0.7rem">
+                    <strong style="color:var(--gold)">
+                        <span class="en">Nationality:&nbsp;</span>
+                        <span class="ar">الجنسية:&nbsp;</span>
+                    </strong>
+                    <span class="en">Pakistani</span>
+                    <span class="ar">باكستاني</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- ══ SKILLS TAB ══ -->
+        <section id="tab-skills" class="tab-content">
+            <h2>
+                <i class="fa-solid fa-laptop-code h2-icon"></i>
+                <span class="en">Core Competencies</span>
+                <span class="ar">الكفاءات الأساسية</span>
+            </h2>
+
+            <div class="glass-card">
+                <div class="skills-matrix">
+                    <div class="skill-cell">
+                        <h3><i class="fa-solid fa-desktop"></i>
+                            <span class="en">IT Support & Systems</span>
+                            <span class="ar">الدعم الفني والأنظمة</span>
+                        </h3>
+                        <ul class="dot-list en">
+                            <li>Windows OS installation, configuration, and Level 1 troubleshooting.</li>
+                            <li>Workstation maintenance and peripheral support in business environments.</li>
+                            <li>Hardware diagnosis: desktops, printers, and related devices.</li>
+                        </ul>
+                        <ul class="dot-list ar">
+                            <li>تثبيت أنظمة ويندوز وإعدادها وتحديثها ومعالجة المشكلات الفنية الأساسية.</li>
+                            <li>صيانة محطات العمل ودعم الأجهزة الطرفية في بيئات العمل.</li>
+                            <li>تشخيص أعطال الأجهزة للحواسيب والطابعات والملحقات.</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-cell">
+                        <h3><i class="fa-solid fa-network-wired"></i>
+                            <span class="en">Networking</span>
+                            <span class="ar">الشبكات</span>
+                        </h3>
+                        <ul class="dot-list en">
+                            <li>Network troubleshooting and local connectivity issue resolution.</li>
+                            <li>IP addressing and small office network setup.</li>
+                            <li>Meeting room internet and device connectivity readiness.</li>
+                        </ul>
+                        <ul class="dot-list ar">
+                            <li>استكشاف مشكلات الشبكات المحلية وحل مشاكل الاتصال.</li>
+                            <li>إعداد عناوين IP ودعم الاتصال في شبكات المكاتب.</li>
+                            <li>تهيئة الاتصال في قاعات الاجتماعات والأجهزة المرتبطة.</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-cell">
+                        <h3><i class="fa-solid fa-file-lines"></i>
+                            <span class="en">Office & Software</span>
+                            <span class="ar">البرامج والإدارة المكتبية</span>
+                        </h3>
+                        <ul class="dot-list en">
+                            <li>Advanced Microsoft Office Suite — Expert in Excel for data reporting.</li>
+                            <li>Office administration, filing systems, and record accuracy.</li>
+                            <li>IBM JDA and Lotus Notes in structured business workflows.</li>
+                        </ul>
+                        <ul class="dot-list ar">
+                            <li>استخدام متقدم لبرامج مايكروسوفت أوفيس — خبير في Excel للتقارير.</li>
+                            <li>إدارة المكاتب والأرشفة وحفظ السجلات.</li>
+                            <li>خبرة في IBM JDA و Lotus Notes ضمن بيئات العمل المؤسسية.</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-cell">
+                        <h3><i class="fa-solid fa-calendar-check"></i>
+                            <span class="en">Executive Administration</span>
+                            <span class="ar">الإدارة التنفيذية</span>
+                        </h3>
+                        <ul class="dot-list en">
+                            <li>Complex calendar management and executive scheduling coordination.</li>
+                            <li>Vendor negotiation and IT inventory management.</li>
+                            <li>Digital filing systems — delivered 15% efficiency improvement.</li>
+                        </ul>
+                        <ul class="dot-list ar">
+                            <li>إدارة الجداول التنفيذية المعقدة والتنسيق المؤسسي.</li>
+                            <li>التفاوض مع الموردين وإدارة مخزون تقنية المعلومات.</li>
+                            <li>أنظمة الأرشفة الرقمية — حسّنت الكفاءة التشغيلية بنسبة 15%.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ EXPERIENCE TAB ══ -->
+        <section id="tab-experience" class="tab-content">
+            <h2>
+                <i class="fa-solid fa-briefcase h2-icon"></i>
+                <span class="en">Professional Experience</span>
+                <span class="ar">الخبرة المهنية</span>
+            </h2>
+
+            <div class="glass-card">
+                <div class="timeline">
+
+                    <!-- CIC -->
+                    <div class="t-node">
+                        <div class="t-header">
+                            <div>
+                                <div class="t-role en">Technical Support & Office Administrator</div>
+                                <div class="t-role ar">مسؤول الدعم الفني والإدارة المكتبية</div>
+                                <div class="t-org">Certified IT Consultants Company (CIC)</div>
+                            </div>
+                            <span class="t-badge">2010 – 2026</span>
+                        </div>
+                        <ul class="dot-list en">
+                            <li>Provided day-to-day Level 1 technical support for hardware and software, ensuring uninterrupted office operations.</li>
+                            <li>Conducted routine maintenance and troubleshooting for workstations and peripheral devices.</li>
+                            <li>Managed complex executive calendars and coordinated staff tasks to maintain a high-productivity environment.</li>
+                            <li>Implemented a digital filing system, improving office operational efficiency by 15%.</li>
+                            <li>Negotiated vendor contracts and managed IT inventory, achieving a 10% reduction in departmental costs.</li>
+                        </ul>
+                        <ul class="dot-list ar">
+                            <li>تقديم الدعم الفني اليومي من المستوى الأول للأجهزة والبرامج لضمان استمرارية العمليات.</li>
+                            <li>إجراء الصيانة الدورية واستكشاف الأعطال لمحطات العمل والأجهزة الطرفية.</li>
+                            <li>إدارة الجداول التنفيذية المعقدة وتنسيق مهام الموظفين لتحقيق بيئة عمل عالية الإنتاجية.</li>
+                            <li>تطبيق نظام أرشفة رقمي حسّن كفاءة المكتب التشغيلية بنسبة 15%.</li>
+                            <li>التفاوض مع الموردين وإدارة مخزون تقنية المعلومات مع تحقيق توفير 10% في التكاليف.</li>
+                        </ul>
+                        <div class="metric-row">
+                            <span class="metric-pill"><i class="fa-solid fa-arrow-trend-up"></i> 15% efficiency gain</span>
+                            <span class="metric-pill"><i class="fa-solid fa-piggy-bank"></i> 10% cost reduction</span>
+                        </div>
+                    </div>
+
+                    <!-- REGUS -->
+                    <div class="t-node">
+                        <div class="t-header">
+                            <div>
+                                <div class="t-role en">Customer Service Representative</div>
+                                <div class="t-role ar">ممثل خدمة العملاء</div>
+                                <div class="t-org">REGUS Company</div>
+                            </div>
+                            <span class="t-badge">2009</span>
+                        </div>
+                        <ul class="dot-list en">
+                            <li>Provided technical assistance for meeting room setups, including Wi-Fi and presentation equipment.</li>
+                            <li>Delivered first-contact client service, maintaining a 95% client satisfaction rating.</li>
+                        </ul>
+                        <ul class="dot-list ar">
+                            <li>دعم الإعدادات الفنية لقاعات الاجتماعات بما يشمل الإنترنت وأجهزة العرض.</li>
+                            <li>تقديم خدمة العملاء كنقطة اتصال أولى بمعدل رضا 95%.</li>
+                        </ul>
+                        <div class="metric-row">
+                            <span class="metric-pill"><i class="fa-solid fa-star"></i> 95% client satisfaction</span>
+                        </div>
+                    </div>
+
+                    <!-- SALEHIA -->
+                    <div class="t-node">
+                        <div class="t-header">
+                            <div>
+                                <div class="t-role en">Technical Support Engineer</div>
+                                <div class="t-role ar">مهندس دعم فني</div>
+                                <div class="t-org">SALEHIA Company</div>
+                            </div>
+                            <span class="t-badge">2008</span>
+                        </div>
+                        <ul class="dot-list en">
+                            <li>Managed the full lifecycle of workstation setups — installation, configuration, and optimization of Windows OS.</li>
+                            <li>Diagnosed and resolved hardware failures involving motherboards, CPUs, RAM, and storage devices.</li>
+                            <li>Conducted regular hardware upgrades to ensure peak performance of office equipment.</li>
+                        </ul>
+                        <ul class="dot-list ar">
+                            <li>إدارة دورة حياة محطات العمل كاملةً من التثبيت والإعداد وتحسين الأداء.</li>
+                            <li>تشخيص وإصلاح أعطال المعالج والذاكرة والتخزين واللوحة الأم.</li>
+                            <li>إجراء ترقيات دورية للأجهزة لضمان أداء ذروي لمعدات المكتب.</li>
+                        </ul>
+                    </div>
+
+                    <!-- AL OTHAIM -->
+                    <div class="t-node">
+                        <div class="t-header">
+                            <div>
+                                <div class="t-role en">Computer Operator — Data Entry & Management</div>
+                                <div class="t-role ar">مشغل حاسب آلي — إدخال البيانات وإدارتها</div>
+                                <div class="t-org">Al Othaim Holding Company</div>
+                            </div>
+                            <span class="t-badge">2004 – 2006</span>
+                        </div>
+                        <ul class="dot-list en">
+                            <li>Managed daily input and verification of high-volume vendor transaction data with high accuracy.</li>
+                            <li>Utilized IBM JDA software to track and manage inventory levels and supply chain records.</li>
+                            <li>Performed regular data audits to ensure consistency and reliability within the corporate database.</li>
+                            <li>Generated detailed reports and internal communications using Microsoft Office and Lotus Notes.</li>
+                        </ul>
+                        <ul class="dot-list ar">
+                            <li>إدخال والتحقق من بيانات المعاملات عالية الحجم بدقة عالية يومياً.</li>
+                            <li>استخدام IBM JDA لتتبع وإدارة مستويات المخزون وسجلات سلسلة الإمداد.</li>
+                            <li>إجراء مراجعات دورية للبيانات لضمان الاتساق والموثوقية في قاعدة البيانات.</li>
+                            <li>إعداد تقارير مفصلة ومراسلات داخلية باستخدام مايكروسوفت أوفيس و Lotus Notes.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ EDUCATION TAB ══ -->
+        <section id="tab-education" class="tab-content">
+            <h2>
+                <i class="fa-solid fa-graduation-cap h2-icon"></i>
+                <span class="en">Education</span>
+                <span class="ar">التعليم</span>
+            </h2>
+
+            <div class="glass-card">
+                <div class="accordion-wrap">
+                    <div class="acc-item open">
+                        <div class="acc-trigger" onclick="toggleAcc(this.parentElement)">
+                            <h4>
+                                <i class="fa-solid fa-graduation-cap" style="color:var(--gold)"></i>
+                                <span class="en">Bachelor of Computer Science</span>
+                                <span class="ar">بكالوريوس علوم الحاسب</span>
+                            </h4>
+                            <i class="fa-solid fa-chevron-down chevron"></i>
+                        </div>
+                        <div class="acc-body">
+                            <span class="en">Virtual University of Pakistan — 2021. Focused on software engineering, databases, operating systems, and networking fundamentals.</span>
+                            <span class="ar">الجامعة الافتراضية في باكستان — 2021. مع تركيز أكاديمي على هندسة البرمجيات وقواعد البيانات وأنظمة التشغيل وأساسيات الشبكات.</span>
+                        </div>
+                    </div>
+                    <div class="acc-item">
+                        <div class="acc-trigger" onclick="toggleAcc(this.parentElement)">
+                            <h4>
+                                <i class="fa-solid fa-school" style="color:var(--slate)"></i>
+                                <span class="en">F.Sc — Pre-Engineering</span>
+                                <span class="ar">الثانوية العامة — علوم / ما قبل الهندسة</span>
+                            </h4>
+                            <i class="fa-solid fa-chevron-down chevron"></i>
+                        </div>
+                        <div class="acc-body">
+                            <span class="en">BISE Swat, K.P.K, Pakistan — 1997. Concentration on mathematics, physics, and analytical subjects.</span>
+                            <span class="ar">BISE Swat، خيبر باختونخوا، باكستان — 1997. التركيز على الرياضيات والفيزياء والمواد التحليلية.</span>
+                        </div>
+                    </div>
+                    <div class="acc-item">
+                        <div class="acc-trigger" onclick="toggleAcc(this.parentElement)">
+                            <h4>
+                                <i class="fa-solid fa-book-open" style="color:var(--slate)"></i>
+                                <span class="en">S.Sc — Secondary School Certificate</span>
+                                <span class="ar">الشهادة الثانوية</span>
+                            </h4>
+                            <i class="fa-solid fa-chevron-down chevron"></i>
+                        </div>
+                        <div class="acc-body">
+                            <span class="en">BISE Swat, K.P.K, Pakistan — 1995.</span>
+                            <span class="ar">BISE Swat، خيبر باختونخوا، باكستان — 1995.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-gap">
+                <i class="fa-solid fa-certificate h2-icon"></i>
+                <span class="en">Professional Certifications</span>
+                <span class="ar">الشهادات الاحترافية</span>
+            </h2>
+
+            <div class="glass-card">
+                <div class="cert-grid">
+                    <div class="cert-card">
+                        <div class="cert-icon"><i class="fa-solid fa-server"></i></div>
+                        <h3>MCSE</h3>
+                        <p>Microsoft Certified Systems Engineer</p>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <h3>MCSA</h3>
+                        <p>Microsoft Certified Systems Administrator</p>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-icon"><i class="fa-solid fa-id-badge"></i></div>
+                        <h3>MCP</h3>
+                        <p>Microsoft Certified Professional</p>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-icon"><i class="fa-solid fa-network-wired"></i></div>
+                        <h3>CCNA</h3>
+                        <p>Cisco Certified Network Associate</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        /* ── Language ── */
+        function setLang(lang) {
+            const root = document.getElementById('portfolio-root');
+            const pill = document.getElementById('slider-pill');
+            const btnEn = document.getElementById('btn-en');
+            const btnAr = document.getElementById('btn-ar');
+
+            root.setAttribute('lang', lang);
+            root.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+            if (lang === 'en') {
+                pill.style.transform = 'translateX(0%)';
+                btnEn.classList.add('active-lang');
+                btnAr.classList.remove('active-lang');
+            } else {
+                // In RTL the pill slides to the LEFT (visually the right side in RTL)
+                pill.style.transform = 'translateX(-100%)';
+                btnAr.classList.add('active-lang');
+                btnEn.classList.remove('active-lang');
+            }
+        }
+
+        /* ── Tabs ── */
+        function openTab(e, id) {
+            const btn = e.target.closest('.tab-btn');
+            if (!btn) return;
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-content'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
+            document.getElementById(id).classList.add('active-content');
+            btn.classList.add('active-tab');
+            if (window.innerWidth <= 1100) {
+                document.querySelector('.main-viewport').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        /* ── Accordion ── */
+        function toggleAcc(el) {
+            const items = document.querySelectorAll('.acc-item');
+            const isOpen = el.classList.contains('open');
+            items.forEach(i => i.classList.remove('open'));
+            if (!isOpen) el.classList.add('open');
+        }
+
+        /* Init */
+        window.addEventListener('DOMContentLoaded', () => setLang('en'));
+    </script>
+</body>
+</html>
